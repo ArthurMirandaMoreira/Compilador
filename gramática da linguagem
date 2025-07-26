@@ -1,0 +1,53 @@
+program ::= program [decl-list] begin stmt-list end  
+
+decl-list ::= decl decl-list-sufix 
+decl-list-sufix :: = decl decl-list-sufix |  λ 
+decl ::= type “:” ident-list “;”  
+ident-list ::= identifier {"," identifier}  
+type ::= int | float | char  
+
+stmt-list ::= stmt stmt-sufix 
+stmt-list-sufix :: = stmt stmt-list-sufix |  λ 
+stmt ::= assign-stmt “;” | if-stmt “;” | while-stmt “;” | repeat-stmt “;” | read-stmt “;”| write-stmt “;” 
+
+assign-stmt ::= identifier "=" simple_expr  
+
+if-stmt ::= if condition then [decl-list] stmt-list if-sufix 
+if-sufix :: = end | else declaration stmt- list end  
+condition ::= expression  
+
+repeat-stmt ::= repeat [decl-list] stmt-list stmt-suffix 
+stmt-suffix ::= until condition  
+
+while-stmt ::= stmt-prefix [decl-list] stmt-list end  
+stmt-prefix ::= while condition do  
+
+read-stmt ::= in "(" identifier ")"  
+
+write-stmt ::= out "(" writable ")"  
+
+writable ::= simple-expr | literal  
+
+expression ::= simple-expr [relop simple-expr] 
+simple-expr ::= term {addop simple-expr} 
+term ::= factor-a {mulop term} 
+fator-a ::= factor | ! factor | "-" factor  
+factor ::= identifier | constant | "(" expression ")"  
+
+relop ::= "==" | ">" | ">=" | "<" | "<=" | "!="  
+addop ::= "+" | "-" | ||  
+mulop ::= "*" | "/" | &&  
+
+constant ::= integer_const | float_const | char_const
+
+integer_const → digit^+
+float_const → digit^+ “.” digit^+
+char_const → "‘" carac "’"
+literal → " “" caractere^* "”"
+identifier → (letter|“_”) (letter | digit | “_”)^*
+letter → [A-za-z]
+digit → [0-9]
+carac → um dos caracteres ASCII
+caractere → um dos caracteres ASCII, exceto “” e quebra de linha
+
+Sendo ^* o fecho de kleene, e ^+ o fecho positivo
