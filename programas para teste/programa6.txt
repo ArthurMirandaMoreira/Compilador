@@ -1,0 +1,9 @@
+program
+	char: a;
+	int: b;
+	float: c;
+	float: result;
+begin
+	out("Testando promoção de tipos :");
+	result = (a+b)+c;
+end
